@@ -1,0 +1,242 @@
+import React, { useState, useEffect } from "react";
+
+// Enhanced SVG Icons with hover animations
+const CodeIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 mb-3 text-green-400 group-hover:text-green-300 transition-all duration-300 group-hover:scale-110">
+    <polyline points="16 18 22 12 16 6"></polyline>
+    <polyline points="8 6 2 12 8 18"></polyline>
+  </svg>
+);
+
+const ServerIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 mb-3 text-green-400 group-hover:text-green-300 transition-all duration-300 group-hover:scale-110">
+    <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+    <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+    <line x1="6" y1="6" x2="6.01" y2="6"></line>
+    <line x1="6" y1="18" x2="6.01" y2="18"></line>
+  </svg>
+);
+
+const BrainIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 mb-3 text-green-400 group-hover:text-green-300 transition-all duration-300 group-hover:scale-110">
+    <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.9-3.35 2.5 2.5 0 0 1 3.24-2.26 2.5 2.5 0 0 1 2.62-3.33 2.5 2.5 0 0 1 2.62-3.33 2.5 2.5 0 0 1 2.24-1.32Z" />
+    <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.9-3.35 2.5 2.5 0 0 0-3.24-2.26 2.5 2.5 0 0 0-2.62-3.33 2.5 2.5 0 0 0-2.62-3.33 2.5 2.5 0 0 0-2.24-1.32Z" />
+  </svg>
+);
+
+const YoutubeIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 mb-3 text-green-400 group-hover:text-green-300 transition-all duration-300 group-hover:scale-110">
+    <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
+    <path d="m10 15 5-3-5-3z" />
+  </svg>
+);
+
+// Typewriter effect component
+const TypewriterText = ({ text, delay = 50 }) => {
+  const [displayText, setDisplayText] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayText(prev => prev + text[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
+      }, delay);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [currentIndex, text, delay]);
+
+  return (
+    <span>
+      {displayText}
+      {currentIndex < text.length && <span className="animate-pulse text-green-400">|</span>}
+    </span>
+  );
+};
+
+// Matrix rain effect (optional background decoration)
+const MatrixRain = () => {
+  const chars = "01";
+  const columns = 50;
+  
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-5">
+      {Array.from({ length: columns }).map((_, i) => (
+        <div
+          key={i}
+          className="absolute text-green-400 text-xs font-mono"
+          style={{
+            left: `${(i * 100) / columns}%`,
+            animationDelay: `${Math.random() * 5}s`,
+            animation: 'matrix-fall 10s linear infinite'
+          }}
+        >
+          {Array.from({ length: 20 }).map((_, j) => (
+            <div key={j} className="opacity-20">
+              {chars[Math.floor(Math.random() * chars.length)]}
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const About = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
+  return (
+    <div className="relative min-h-screen bg-black text-white overflow-hidden">
+      {/* Matrix background effect */}
+      <MatrixRain />
+      
+      {/* Main content */}
+      <div className={`relative z-10 max-w-6xl mx-auto p-8 transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        
+        {/* Terminal header */}
+        <div className="mb-8 border border-green-800 bg-black/50 backdrop-blur-sm rounded-lg p-4">
+          <div >
+            <span className="text-green-400 font-mono">
+              <TypewriterText text="Loading developer profile..." delay={50} />
+            </span>
+          </div>
+        </div>
+
+        <div className="space-y-12">
+          
+          {/* About Me Section */}
+          <section className="border border-green-800/30 bg-gradient-to-br from-green-900/10 to-black/50 backdrop-blur-sm rounded-xl p-8 shadow-2xl shadow-green-900/20 hover:shadow-green-900/40 transition-all duration-500">
+            <div className="flex items-center mb-6">
+              <span className="text-green-400 font-mono mr-4"></span>
+              <h2 className="text-2xl text-green-400 font-bold font-mono tracking-wider">
+                ABOUT_ME.exe
+              </h2>
+              <div className="ml-auto">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              </div>
+            </div>
+            
+            <div className="ml-6 border-l-2 border-green-800/30 pl-6">
+              <p className="text-gray-300 leading-relaxed text-lg font-light">
+                I'm a dedicated <span className="text-green-400 font-semibold">Full-Stack Developer</span> with a strong focus on backend development, driven by a passion for building scalable systems and writing clean, efficient code. I also have a growing interest in <span className="text-green-400 font-semibold">Artificial Intelligence</span> and <span className="text-green-400 font-semibold">Machine Learning</span>, continuously exploring how intelligent systems can enhance real-world applications.
+              </p>
+              
+              <div className="mt-6 flex flex-wrap gap-2">
+                {['JavaScript', 'Node.js', 'React', 'MongoDB', 'AI/ML', 'Express'].map((tech) => (
+                  <span key={tech} className="px-3 py-1 bg-green-900/30 border border-green-800/50 rounded-full text-green-400 text-sm font-mono hover:bg-green-800/30 transition-colors duration-300">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Skills Section */}
+          <section>
+            <div className="flex items-center mb-8">
+              <span className="text-green-400 font-mono mr-4"></span>
+              <h2 className="text-2xl text-green-400 font-bold font-mono tracking-wider">
+                What i'm doing
+              </h2>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+              {/* Full Stack Developer Card */}
+              <div className="group border border-green-800/40 bg-gradient-to-br from-green-900/20 to-black/80 backdrop-blur-sm p-6 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-green-900/30 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-green-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-4">
+                    <CodeIcon />
+
+                  </div>
+                  <h3 className="font-bold text-green-400 text-xl mb-3 font-mono">
+                    Full Stack Developer
+                  </h3>
+                  <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
+                    Building dynamic, secure, and scalable web applications with expertise in robust backends and efficient frontend-backend integrations.
+                  </p>
+                </div>
+              </div>
+
+              {/* Backend Card */}
+              <div className="group border border-green-800/40 bg-gradient-to-br from-green-900/20 to-black/80 backdrop-blur-sm p-6 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-green-900/30 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-green-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-4">
+                    <ServerIcon />
+                  </div>
+                  <h3 className="font-bold text-green-400 text-xl mb-3 font-mono">
+                    Back-End Systems
+                  </h3>
+                  <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
+                    Mastering backend development with JavaScript, Node.js, Express, APIs, and MongoDB to architect scalable web applications.
+                  </p>
+                </div>
+              </div>
+
+              {/* AI/ML Card */}
+              <div className="group border border-green-800/40 bg-gradient-to-br from-green-900/20 to-black/80 backdrop-blur-sm p-6 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-green-900/30 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-green-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-4">
+                    <BrainIcon />
+                  </div>
+                  <h3 className="font-bold text-green-400 text-xl mb-3 font-mono">
+                    AI/ML Research
+                  </h3>
+                  <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
+                    Diving deep into AI/ML with focus on data-driven models, pattern recognition, and developing intelligent applications.
+                  </p>
+                </div>
+              </div>
+
+              {/* YouTube Card */}
+              <div className="group border border-green-800/40 bg-gradient-to-br from-green-900/20 to-black/80 backdrop-blur-sm p-6 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-green-900/30 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-green-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-4">
+                    <YoutubeIcon />
+                  </div>
+                  <h3 className="font-bold text-green-400 text-xl mb-3 font-mono">
+                    Content Creation
+                  </h3>
+                  <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
+                    Documenting my tech journey on YouTube—sharing backend, JavaScript, and AI/ML insights while building community connections.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          {/* Status footer */}
+          <div className="mt-12 border-t border-green-800/30 pt-6">
+            <div className="flex items-center justify-between text-green-400/70 font-mono text-sm">
+              <span>Status: Ready for new challenges</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <span>Online</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <style jsx>{`
+        @keyframes matrix-fall {
+          0% { transform: translateY(-100vh); }
+          100% { transform: translateY(100vh); }
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default About;

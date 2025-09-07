@@ -1,0 +1,98 @@
+/* NEW: Add this animation rule at the very top of your file.
+  This creates the blinking effect for our custom cursor.
+*/
+@keyframes blink-cursor {
+  0%, 100% { 
+    opacity: 1; 
+  }
+  50% { 
+    opacity: 0; 
+  }
+}
+
+/* Main container for the entire terminal window */
+.terminal-container {
+  @apply w-full h-screen bg-black font-mono text-sm border-2 border-green-400;
+}
+
+/* Header bar at the top */
+.terminal-header {
+  @apply bg-black p-2 flex items-center border-b-2 border-green-400;
+}
+
+/* Container for the red, yellow, green window control dots */
+.window-dots {
+  @apply flex space-x-2;
+}
+
+/* Individual window control dot */
+.dot {
+  @apply w-3 h-3 rounded-full;
+}
+.dot-red { @apply bg-red-500; }
+.dot-yellow { @apply bg-yellow-500; }
+.dot-green { @apply bg-green-500; }
+
+/* Navigation bar in the header */
+.terminal-nav {
+  @apply flex-grow text-center text-green-400;
+}
+
+/* Buttons within the navigation bar */
+.nav-button {
+  @apply px-3 py-1 hover:bg-green-900 rounded transition-colors duration-200;
+}
+
+/* Main content area of the terminal */
+.terminal-body {
+  @apply p-4 overflow-y-auto h-[calc(100%-64px)];
+}
+
+/* A single line in the history output */
+.history-line {
+  @apply mb-2;
+}
+
+/* Styling for the user prompt parts */
+.prompt-user { @apply text-blue-400; }
+.prompt-separator { @apply text-gray-200; }
+.prompt-directory { @apply text-purple-400; }
+.prompt-symbol { @apply text-gray-200; }
+
+/* The text of the command that was entered */
+.command-text {
+  @apply text-green-400;
+}
+
+/* A standard output line from a command */
+.output-line {
+  @apply text-white;
+}
+
+/* Styling for the 'help' command output */
+.help-command {
+  @apply text-white;
+}
+.help-command p {
+  @apply mb-2;
+}
+.help-command ul {
+  @apply list-inside list-disc space-y-1;
+}
+.help-command li span {
+  @apply text-white;
+}
+
+/* The form that contains the current input line */
+.input-form {
+  @apply flex items-center;
+}
+
+/* --- MODIFIED INPUT ---
+  1. We make the input field a 'relative' positioning container.
+  2. We make the default cursor invisible.
+*/
+.terminal-input {
+  @apply ml-2 flex-1 bg-transparent border-none text-green-400 focus:outline-none focus:ring-0 relative;
+}
+
