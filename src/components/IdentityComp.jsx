@@ -1,26 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '/public/css/IdentityComp.css';
 
 const IdentityComp = ({
   name = "Anup Pradhan (Mors)",
-  title = "Full Stack Developer",
+  title = "Full Stack Developer", 
   company = "Non",
   photo = "/public/images/your-photo.jpg",
   id = "EMP001"
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile devices
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Handle touch events for mobile
+  const handleTouchStart = () => {
+    if (isMobile) {
+      setIsHovered(true);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (isMobile) {
+      setTimeout(() => setIsHovered(false), 2000);
+    }
+  };
 
   return (
     <div className="identity-container">
-      {/* Lanyard String */}
-      <div className="lanyard-string" />
-      <div className="lanyard-clip" />
+      {/* Lanyard String - Only show on desktop */}
+      {!isMobile && (
+        <>
+          <div className="lanyard-string" />
+          <div className="lanyard-clip" />
+        </>
+      )}
 
       {/* ID Card */}
       <div
-        className={`identity-card ${isHovered ? 'hovered' : ''}`}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        className={`identity-card ${isHovered ? 'hovered' : ''} ${isMobile ? 'mobile' : ''}`}
+        onMouseEnter={() => !isMobile && setIsHovered(true)}
+        onMouseLeave={() => !isMobile && setIsHovered(false)}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         aria-label="Identity card"
       >
         {/* Subtle grid/glow backdrop */}
@@ -29,7 +61,7 @@ const IdentityComp = ({
         {/* CRT scanlines overlay */}
         <div aria-hidden className="crt-scanlines" />
 
-        {/* Card Header */}
+        {/* Card Header - Smaller on mobile */}
         <div className="card-header">
           <div className="company-logo">
             <span className="logo-icon">&lt;/&gt;</span>
@@ -64,13 +96,15 @@ const IdentityComp = ({
           </div>
         </div>
 
-        {/* Card Footer */}
-        <div className="card-footer">
-          <div className="access-level">
-            <span className="status-indicator" />
-            <span>AUTHORIZED</span>
+        {/* Card Footer - Hide AUTHORIZED on mobile */}
+        {!isMobile && (
+          <div className="card-footer">
+            <div className="access-level">
+              <span className="status-indicator" />
+              <span>AUTHORIZED</span>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Holographic Effect */}
         <div aria-hidden className="holographic-overlay" />
@@ -78,7 +112,7 @@ const IdentityComp = ({
 
       {/* Interactive Label */}
       <div className="interaction-label">
-        [Interactive 3D Card]
+        {isMobile ? '[Tap to Interact]' : '[Interactive 3D Card]'}
       </div>
     </div>
   );

@@ -230,7 +230,7 @@ const About = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style jsx="true">{`
         @keyframes matrix-fall {
           0% { transform: translateY(-100vh); }
           100% { transform: translateY(100vh); }
