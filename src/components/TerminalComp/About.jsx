@@ -69,8 +69,7 @@ const MatrixRain = () => {
           className="absolute text-green-400 text-xs font-mono"
           style={{
             left: `${(i * 100) / columns}%`,
-            animationDelay: `${Math.random() * 5}s`,
-            animation: 'matrix-fall 10s linear infinite'
+            animation: `matrix-fall 10s linear infinite ${Math.random() * 5}s`
           }}
         >
           {Array.from({ length: 20 }).map((_, j) => (

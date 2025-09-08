@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // --- Enhanced SVG Icons with hover effects ---
 const MailIcon = () => (
@@ -58,9 +58,28 @@ const LeetcodeIcon = () => (
   </svg>
 );
 
-// Enhanced Contact component with glassmorphism and interactive effects
+// Enhanced Contact component with animations and mobile responsiveness
 const Contact = () => {
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [headerVisible, setHeaderVisible] = useState(false);
+  const [contentVisible, setContentVisible] = useState(false);
+  const [socialsVisible, setSocialsVisible] = useState(false);
+
+  // Staggered entrance animations
+  useEffect(() => {
+    const timer1 = setTimeout(() => setMounted(true), 100);
+    const timer2 = setTimeout(() => setHeaderVisible(true), 300);
+    const timer3 = setTimeout(() => setContentVisible(true), 600);
+    const timer4 = setTimeout(() => setSocialsVisible(true), 900);
+
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
+      clearTimeout(timer4);
+    };
+  }, []);
 
   const handleEmailClick = async (e) => {
     e.preventDefault();
@@ -69,62 +88,64 @@ const Contact = () => {
       setCopiedEmail(true);
       setTimeout(() => setCopiedEmail(false), 2000);
     } catch (err) {
-      // Fallback to mailto if clipboard API fails
       window.location.href = 'mailto:anuppradhan929@gmail.com';
     }
   };
 
   return (
-    <div className="text-white max-w-5xl mx-auto p-6 relative">
-      {/* Background gradient effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 via-transparent to-cyan-500/10 rounded-3xl blur-xl"></div>
-      <div className="absolute -top-4 -left-4 w-32 h-32 bg-green-400/20 rounded-full blur-2xl animate-pulse"></div>
-      <div className="absolute -bottom-4 -right-4 w-40 h-40 bg-cyan-400/15 rounded-full blur-2xl animate-pulse delay-1000"></div>
+    <div className="text-white max-w-5xl mx-auto p-3 sm:p-6 relative min-h-screen flex items-center">
+      {/* Background gradient effects with animation */}
+      <div className={`absolute inset-0 transition-all duration-1000 ease-out ${mounted ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+        <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 via-transparent to-cyan-500/10 rounded-3xl blur-xl"></div>
+        <div className="absolute -top-4 -left-4 w-24 h-24 sm:w-32 sm:h-32 bg-green-400/20 rounded-full blur-2xl animate-pulse"></div>
+        <div className="absolute -bottom-4 -right-4 w-32 h-32 sm:w-40 sm:h-40 bg-cyan-400/15 rounded-full blur-2xl animate-pulse delay-1000"></div>
+      </div>
       
-      <div className="relative backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-8 shadow-2xl">
-        {/* Header with terminal styling */}
-        <div className="flex items-center mb-8">
-          <div className="flex space-x-2 mr-4">
-            <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-            <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+      <div className={`relative w-full backdrop-blur-xl bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-2xl transition-all duration-700 ease-out ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        
+        {/* Header with terminal styling - Animated */}
+        <div className={`flex items-center mb-6 sm:mb-8 transition-all duration-500 ease-out ${headerVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}`}>
+          <div className="flex space-x-1.5 sm:space-x-2 mr-3 sm:mr-4">
+            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-red-500 rounded-full"></div>
+            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-yellow-500 rounded-full"></div>
+            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-500 rounded-full"></div>
           </div>
-          <h2 className="text-2xl font-mono text-green-400 font-bold tracking-wider">
+          <h2 className="text-lg sm:text-2xl font-mono text-green-400 font-bold tracking-wider">
             <span className="text-gray-500">$</span> contact --connect
           </h2>
         </div>
 
         {/* Terminal cursor animation */}
-        <div className="mb-6">
-          <p className="text-gray-300 font-mono text-sm leading-relaxed">
+        <div className={`mb-4 sm:mb-6 transition-all duration-500 ease-out delay-200 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+          <p className="text-gray-300 font-mono text-xs sm:text-sm leading-relaxed">
             <span className="text-green-400">&gt;</span> Establishing secure connection...
-            <span className="inline-block w-2 h-4 bg-green-400 ml-1 animate-pulse"></span>
+            <span className="inline-block w-1.5 h-3 sm:w-2 sm:h-4 bg-green-400 ml-1 animate-pulse"></span>
           </p>
-          <p className="text-gray-400 font-mono text-sm mt-2">
+          <p className="text-gray-400 font-mono text-xs sm:text-sm mt-1 sm:mt-2">
             Ready to collaborate on innovative projects and opportunities.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10">
           
-          {/* Direct Contact Section */}
-          <div className="space-y-6">
-            <div className="flex items-center space-x-3 mb-6">
-              <h3 className="text-xl font-mono text-green-400 font-semibold">// Direct.Contact</h3>
+          {/* Direct Contact Section - Animated */}
+          <div className={`space-y-4 sm:space-y-6 transition-all duration-600 ease-out ${contentVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-6'}`}>
+            <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
+              <h3 className="text-base sm:text-xl font-mono text-green-400 font-semibold">// Direct.Contact</h3>
             </div>
             
             {/* Email with copy functionality */}
             <div 
               onClick={handleEmailClick}
-              className="group relative p-4 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:border-green-400/50 transition-all duration-300 cursor-pointer transform hover:scale-[1.02] hover:shadow-lg hover:shadow-green-400/20"
+              className="group relative p-3 sm:p-4 bg-white/5 border border-white/10 rounded-lg sm:rounded-xl hover:bg-white/10 hover:border-green-400/50 transition-all duration-300 cursor-pointer transform hover:scale-[1.02] hover:shadow-lg hover:shadow-green-400/20 active:scale-[0.98]"
             >
               <div className="flex items-center">
-                <div className="p-2 bg-gradient-to-br from-green-400/20 to-cyan-400/20 rounded-lg mr-4 group-hover:from-green-400/30 group-hover:to-cyan-400/30 transition-all duration-300">
+                <div className="p-2 bg-gradient-to-br from-green-400/20 to-cyan-400/20 rounded-lg mr-3 sm:mr-4 group-hover:from-green-400/30 group-hover:to-cyan-400/30 transition-all duration-300">
                   <MailIcon />
                 </div>
-                <div className="flex-1">
-                  <p className="text-gray-400 text-sm font-mono">EMAIL</p>
-                  <p className="text-white font-mono group-hover:text-green-400 transition-colors duration-300">
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-400 text-xs sm:text-sm font-mono">EMAIL</p>
+                  <p className="text-white font-mono text-sm sm:text-base group-hover:text-green-400 transition-colors duration-300 truncate">
                     anuppradhan929@gmail.com
                   </p>
                   {copiedEmail && (
@@ -133,8 +154,8 @@ const Contact = () => {
                     </p>
                   )}
                 </div>
-                <div className="text-gray-500 group-hover:text-green-400 transition-colors duration-300">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <div className="text-gray-500 group-hover:text-green-400 transition-colors duration-300 flex-shrink-0">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                   </svg>
@@ -143,14 +164,14 @@ const Contact = () => {
             </div>
 
             {/* Location */}
-            <div className="group relative p-4 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:border-blue-400/50 transition-all duration-300 transform hover:scale-[1.02]">
+            <div className="group relative p-3 sm:p-4 bg-white/5 border border-white/10 rounded-lg sm:rounded-xl hover:bg-white/10 hover:border-blue-400/50 transition-all duration-300 transform hover:scale-[1.02]">
               <div className="flex items-center">
-                <div className="p-2 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-lg mr-4 group-hover:from-blue-400/30 group-hover:to-purple-400/30 transition-all duration-300">
+                <div className="p-2 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-lg mr-3 sm:mr-4 group-hover:from-blue-400/30 group-hover:to-purple-400/30 transition-all duration-300">
                   <LocationIcon />
                 </div>
                 <div>
-                  <p className="text-gray-400 text-sm font-mono">LOCATION</p>
-                  <p className="text-white font-mono group-hover:text-blue-400 transition-colors duration-300">
+                  <p className="text-gray-400 text-xs sm:text-sm font-mono">LOCATION</p>
+                  <p className="text-white font-mono text-sm sm:text-base group-hover:text-blue-400 transition-colors duration-300">
                     Bhubaneswar, Odisha, India
                   </p>
                 </div>
@@ -158,13 +179,13 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* Social Links Section */}
-          <div className="space-y-6">
-            <div className="flex items-center space-x-3 mb-6">
-              <h3 className="text-xl font-mono text-green-400 font-semibold">// Social.Links</h3>
+          {/* Social Links Section - Animated */}
+          <div className={`space-y-4 sm:space-y-6 transition-all duration-600 ease-out delay-300 ${socialsVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-6'}`}>
+            <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
+              <h3 className="text-base sm:text-xl font-mono text-green-400 font-semibold">// Social.Links</h3>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-3 sm:gap-4">
               {[
                 { icon: YoutubeIcon, name: "YouTube", href: "https://www.youtube.com/@morscode7", color: "red" },
                 { icon: TwitterIcon, name: "Twitter / X", href: "https://x.com/AnupPradhan0", color: "blue" },
@@ -178,34 +199,34 @@ const Contact = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative p-4 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-all duration-300 transform hover:scale-[1.05] hover:shadow-lg hover:shadow-green-400/10"
+                  className={`group relative p-3 sm:p-4 bg-white/5 border border-white/10 rounded-lg sm:rounded-xl hover:bg-white/10 transition-all duration-300 transform hover:scale-[1.03] hover:shadow-lg hover:shadow-green-400/10 active:scale-[0.98] ${socialsVisible ? 'animate-fade-in-up' : ''}`}
                   style={{
-                    animationDelay: `${index * 100}ms`
+                    animationDelay: `${index * 100 + 400}ms`
                   }}
                 >
                   <div className="flex items-center space-x-3">
                     <div className={`p-2 bg-gradient-to-br from-${social.color}-400/20 to-${social.color}-600/20 rounded-lg group-hover:from-${social.color}-400/30 group-hover:to-${social.color}-600/30 transition-all duration-300`}>
                       <social.icon />
                     </div>
-                    <span className="font-mono text-sm group-hover:text-green-400 transition-colors duration-300">
+                    <span className="font-mono text-sm sm:text-base group-hover:text-green-400 transition-colors duration-300">
                       {social.name}
                     </span>
                   </div>
                   
                   {/* Hover effect overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-400/0 via-green-400/5 to-green-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-400/0 via-green-400/5 to-green-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg sm:rounded-xl"></div>
                 </a>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Terminal status bar */}
-        <div className="mt-8 pt-6 border-t border-white/10">
-          <div className="flex items-center justify-between text-sm font-mono">
-            <div className="flex items-center space-x-4">
+        {/* Terminal status bar - Animated */}
+        <div className={`mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-white/10 transition-all duration-700 ease-out delay-500 ${socialsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs sm:text-sm font-mono space-y-2 sm:space-y-0">
+            <div className="flex items-center space-x-2 sm:space-x-4">
               <span className="text-green-400">✓ Connection established</span>
-              <span className="text-gray-500">|</span>
+              <span className="text-gray-500 hidden sm:inline">|</span>
               <span className="text-gray-400">Response time: &lt;100ms</span>
             </div>
             <div className="flex items-center space-x-2">
@@ -215,6 +236,41 @@ const Contact = () => {
           </div>
         </div>
       </div>
+
+      {/* Custom CSS for additional animations */}
+      <style jsx="true">{`
+        @keyframes fade-in-up {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .animate-fade-in-up {
+          animation: fade-in-up 0.6s ease-out forwards;
+          opacity: 0;
+        }
+        
+        .animate-fade-in {
+          animation: fade-in 0.3s ease-out;
+        }
+        
+        @keyframes fade-in {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        /* Mobile touch improvements */
+        @media (hover: none) {
+          .group:active {
+            transform: scale(0.98);
+          }
+        }
+      `}</style>
     </div>
   );
 };
