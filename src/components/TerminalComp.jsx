@@ -21,19 +21,113 @@ const OutputLine = ({ children }) => (
   <div className="output-line">{children}</div>
 );
 
-const Help = () => (
-  <div className="help-command">
-    <p>Available commands:</p>
-    <ul>
-      <li><span>welcome</span> - Display the welcome message.</li>
-      <li><span>about</span> - Learn more about me.</li>
-      <li><span>projects</span> - View my recent projects.</li>
-      <li><span>skills</span> - See my technical skills.</li>
-      <li><span>contact</span> - Get my contact information.</li>
-      <li><span>clear</span> - Clear the terminal screen.</li>
-    </ul>
-  </div>
-);
+// Animated Help Component
+const Help = () => {
+  const [displayedItems, setDisplayedItems] = useState([]);
+  const [currentStep, setCurrentStep] = useState(0);
+
+  const helpItems = [
+    { type: 'title', text: 'Available commands:' },
+    { type: 'command', command: 'welcome', description: 'Display the welcome message.' },
+    { type: 'command', command: 'about', description: 'Learn more about me.' },
+    { type: 'command', command: 'projects', description: 'View my recent projects.' },
+    { type: 'command', command: 'skills', description: 'See my technical skills.' },
+    { type: 'command', command: 'contact', description: 'Get my contact information.' },
+    { type: 'command', command: 'clear', description: 'Clear the terminal screen.' },
+  ];
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (currentStep < helpItems.length) {
+        setDisplayedItems(prev => [...prev, helpItems[currentStep]]);
+        setCurrentStep(currentStep + 1);
+      }
+    }, 200); // Adjust speed here
+
+    return () => clearTimeout(timer);
+  }, [currentStep, helpItems.length]);
+
+  return (
+    <div className="help-command">
+      {displayedItems.map((item, index) => {
+        if (item.type === 'title') {
+          return <p key={index}>{item.text}</p>;
+        } else {
+          return (
+            <ul key={index}>
+              <li>
+                <span>{item.command}</span> - {item.description}
+              </li>
+            </ul>
+          );
+        }
+      })}
+      {currentStep < helpItems.length && (
+        <span className="cursor">|</span>
+      )}
+    </div>
+  );
+};
+
+// Animated Welcome Component
+const Welcome = () => {
+  const [displayedLines, setDisplayedLines] = useState([]);
+  const [currentLine, setCurrentLine] = useState(0);
+
+  const welcomeLines = [
+    "Hi, I'm Anup Pradhan (Mors), a Full-Stack Developer.",
+    "Welcome to my interactive portfolio terminal!",
+    "Type 'help' to see available commands."
+  ];
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (currentLine < welcomeLines.length) {
+        setDisplayedLines(prev => [...prev, welcomeLines[currentLine]]);
+        setCurrentLine(currentLine + 1);
+      }
+    }, 400); // Adjust speed here
+
+    return () => clearTimeout(timer);
+  }, [currentLine, welcomeLines.length]);
+
+  return (
+    <>
+      {displayedLines.map((line, index) => (
+        <OutputLine key={index}>{line}</OutputLine>
+      ))}
+      {currentLine < welcomeLines.length && (
+        <span className="cursor">|</span>
+      )}
+    </>
+  );
+};
+
+// Character-by-character typing component (alternative approach)
+const TypingText = ({ text, speed = 50, onComplete }) => {
+  const [displayedText, setDisplayedText] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText(text.slice(0, currentIndex + 1));
+        setCurrentIndex(currentIndex + 1);
+      }, speed);
+
+      return () => clearTimeout(timeout);
+    } else if (onComplete) {
+      onComplete();
+    }
+  }, [currentIndex, text, speed, onComplete]);
+
+  return (
+    <span>
+      {displayedText}
+      {currentIndex < text.length && <span className="cursor">|</span>}
+    </span>
+  );
+};
 
 // The main Terminal Component
 export default function Terminal() {
@@ -50,16 +144,10 @@ export default function Terminal() {
 
     switch (command.toLowerCase().trim()) {
       case 'help':
-        newHistory.push({ type: 'output', content: <Help /> });
+        newHistory.push({ type: 'output', content: <Help key={Date.now()} /> });
         break;
       case 'welcome':
-        newHistory.push({ type: 'output', content: (
-            <>
-              <OutputLine>Hi, I'm Anup Pradhan (Mors), a Full-Stack Developer.</OutputLine>
-              <OutputLine>Welcome to my interactive portfolio terminal!</OutputLine>
-              <OutputLine>Type 'help' to see available commands.</OutputLine>
-            </>
-        )});
+        newHistory.push({ type: 'output', content: <Welcome key={Date.now()} /> });
         break;
       case 'about':
         newHistory.push({ type: 'output', content: <About /> });
@@ -151,4 +239,3 @@ export default function Terminal() {
     </div>
   );
 }
-

@@ -96,3 +96,39 @@
   @apply ml-2 flex-1 bg-transparent border-none text-green-400 focus:outline-none focus:ring-0 relative;
 }
 
+
+/* Cursor animation */
+.cursor {
+  animation: blink 1s infinite;
+  color: #00ff00;
+  font-weight: bold;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Help command styling */
+.help-command {
+  color: white;
+}
+
+.help-command p {
+  margin-bottom: 0.5rem;
+}
+
+.help-command ul {
+  list-style: disc inside;
+  margin: 0;
+  padding: 0;
+}
+
+.help-command li {
+  margin-bottom: 0.25rem;
+}
+
+.help-command li span {
+  color: #00ff00;
+  font-weight: bold;
+}

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 const projectsData = [
   {
     name: "AI-powered personal finance tracker",
-    description: "RukiAI is an AI-driven personal finance tracker designed to help users log expenses,set budgets, and receive smart, personalized financial advice. Built with Node.js, MongoDB, and EJS, it integrates Cohere’s AI API to deliver real-time insights while also featuring a custom local AI model to demonstrate advanced AI capabilities for recruiters. The project showcases both cloud-based AI integration and self-hosted model development in one application.",
+    description: "RukiAI is an AI-driven personal finance tracker designed to help users log expenses,set budgets, and receive smart, personalized financial advice. Built with Node.js, MongoDB, and EJS, it integrates Cohere's AI API to deliver real-time insights while also featuring a custom local AI model to demonstrate advanced AI capabilities for recruiters. The project showcases both cloud-based AI integration and self-hosted model development in one application.",
     imageUrl: "/images/ruki-ai-project.png",
     liveUrl: "https://www.rukiai.online/",
     githubUrl: "https://github.com/M0rs-Ruki/AI-Personal-Finance-Tracker",
@@ -82,7 +82,8 @@ const Projects = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   
-  const projectsPerPage = 2;
+  // Responsive projects per page - 1 on mobile, 2 on desktop
+  const projectsPerPage = window.innerWidth < 768 ? 1 : 2;
   const totalPages = Math.ceil(projectsData.length / projectsPerPage);
   
   // Get current projects to display
@@ -102,41 +103,41 @@ const Projects = () => {
   };
 
   return (
-    <div className="text-white space-y-8 max-w-7xl mx-auto p-4">
+    <div className="text-white space-y-4 sm:space-y-8 max-w-7xl mx-auto p-3 sm:p-4">
       {/* Header with terminal-style decoration */}
-      <div className="flex items-center space-x-4 mb-8">
+      <div className="flex items-center space-x-2 sm:space-x-4 mb-4 sm:mb-8">
         <TerminalIcon />
-        <h2 className="text-2xl text-green-400 font-bold font-mono tracking-wider">
+        <h2 className="text-lg sm:text-2xl text-green-400 font-bold font-mono tracking-wider">
           ~/projects
         </h2>
         <div className="flex-1 h-px bg-gradient-to-r from-green-400/50 to-transparent"></div>
-        <span className="text-green-400/60 text-sm font-mono">
-          {projectsData.length} repositories
+        <span className="text-green-400/60 text-xs sm:text-sm font-mono">
+          {projectsData.length} repos
         </span>
       </div>
 
-      {/* Page indicator */}
-      <div className="flex items-center justify-between mb-6">
+      {/* Page indicator - Mobile optimized */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 space-y-2 sm:space-y-0">
         <div className="flex items-center space-x-2 text-green-400 font-mono">
-          <span className="text-sm">Page {currentPage + 1} of {totalPages}</span>
+          <span className="text-xs sm:text-sm">Page {currentPage + 1} of {totalPages}</span>
           <div className="flex space-x-1">
             {Array.from({ length: totalPages }, (_, i) => (
               <div
                 key={i}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${
                   i === currentPage ? 'bg-green-400' : 'bg-gray-600'
                 }`}
               />
             ))}
           </div>
         </div>
-        <div className="text-green-400/60 text-sm font-mono">
+        <div className="text-green-400/60 text-xs sm:text-sm font-mono">
           Showing {startIndex + 1}-{Math.min(startIndex + projectsPerPage, projectsData.length)} of {projectsData.length}
         </div>
       </div>
 
-      {/* Grid container for current page projects - 2 per page */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 min-h-[600px]">
+      {/* Grid container - Responsive: 1 column on mobile, 2 on desktop */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 min-h-[400px] sm:min-h-[600px]">
         {currentProjects.map((project, index) => {
           const globalIndex = startIndex + index;
           return (
@@ -147,24 +148,24 @@ const Projects = () => {
               onMouseLeave={() => setHoveredIndex(null)}
             >
               {/* Glassmorphism card */}
-              <div className="backdrop-blur-md bg-gray-900/30 border border-green-500/20 rounded-xl overflow-hidden transform transition-all duration-300 hover:scale-[1.02] hover:border-green-400/40 hover:shadow-2xl hover:shadow-green-500/10">
+              <div className="backdrop-blur-md bg-gray-900/30 border border-green-500/20 rounded-lg sm:rounded-xl overflow-hidden transform transition-all duration-300 hover:scale-[1.01] sm:hover:scale-[1.02] hover:border-green-400/40 hover:shadow-2xl hover:shadow-green-500/10">
                 
                 {/* Terminal header bar */}
-                <div className="bg-gray-800/50 px-4 py-2 border-b border-green-500/20 flex items-center space-x-2">
-                  <div className="flex space-x-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500/60"></div>
-                    <div className="w-3 h-3 rounded-full bg-yellow-500/60"></div>
-                    <div className="w-3 h-3 rounded-full bg-green-500/60"></div>
+                <div className="bg-gray-800/50 px-3 sm:px-4 py-2 border-b border-green-500/20 flex items-center space-x-2">
+                  <div className="flex space-x-1 sm:space-x-2">
+                    <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-red-500/60"></div>
+                    <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-yellow-500/60"></div>
+                    <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-green-500/60"></div>
                   </div>
-                  <div className="flex-1 text-center">
-                    <span className="text-green-400/70 text-xs font-mono">
+                  <div className="flex-1 text-center overflow-hidden">
+                    <span className="text-green-400/70 text-xs font-mono block truncate">
                       {project.name.toLowerCase().replace(/\s+/g, '-')}
                     </span>
                   </div>
                 </div>
 
                 {/* Project Image with overlay */}
-                <div className="relative h-56 overflow-hidden">
+                <div className="relative h-40 sm:h-56 overflow-hidden">
                   <img 
                     src={project.imageUrl} 
                     alt={project.name} 
@@ -172,7 +173,6 @@ const Projects = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent"></div>
                   
-
                   {/* Hover overlay with glitch effect */}
                   <div className={`absolute inset-0 bg-green-500/5 transition-all duration-300 ${
                     hoveredIndex === globalIndex ? 'opacity-100' : 'opacity-0'
@@ -181,49 +181,49 @@ const Projects = () => {
                   </div>
                 </div>
 
-                {/* Project Content */}
-                <div className="p-8 space-y-5">
+                {/* Project Content - Mobile optimized */}
+                <div className="p-4 sm:p-8 space-y-3 sm:space-y-5">
                   <div className="flex items-start justify-between">
-                    <h3 className="font-semibold text-green-400 text-xl mb-3 font-mono group-hover:text-green-300 transition-colors">
+                    <h3 className="font-semibold text-green-400 text-base sm:text-xl mb-2 sm:mb-3 font-mono group-hover:text-green-300 transition-colors leading-tight">
                       {project.name}
                     </h3>
                   </div>
                   
-                  {/* Tech stack badges */}
-                  <div className="top-3 right-3 flex flex-wrap gap-1 max-w-40">
+                  {/* Tech stack badges - Mobile responsive */}
+                  <div className="flex flex-wrap gap-1 sm:gap-2">
                     {project.tech.map((tech, techIndex) => (
                       <span 
                         key={techIndex}
-                        className="px-2 py-1 text-xs bg-green-500/20 text-green-400 rounded-full border border-green-500/30 font-mono"
+                        className="px-1.5 py-0.5 sm:px-2 sm:py-1 text-xs bg-green-500/20 text-green-400 rounded-full border border-green-500/30 font-mono"
                       >
                         {tech}
                       </span>
                     ))}
                   </div>
 
-                  <p className="text-gray-300 text-base leading-relaxed">
+                  <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
                     {project.description}
                   </p>
                   
-                  {/* Terminal-style command line */}
-                  <div className="bg-gray-800/50 rounded-md p-4 font-mono text-sm border border-gray-700/50">
-                    <div className="flex items-center space-x-2 text-green-400">
-                      <span className="text-green-500">$</span>
-                      <span className="text-gray-400">git clone</span>
-                      <span className="text-blue-400 truncate">
+                  {/* Terminal-style command line - Mobile responsive */}
+                  <div className="bg-gray-800/50 rounded-md p-2 sm:p-4 font-mono text-xs sm:text-sm border border-gray-700/50 overflow-hidden">
+                    <div className="flex items-center space-x-1 sm:space-x-2 text-green-400">
+                      <span className="text-green-500 flex-shrink-0">$</span>
+                      <span className="text-gray-400 flex-shrink-0">git clone</span>
+                      <span className="text-blue-400 truncate min-w-0">
                         {project.githubUrl.split('/').pop()}.git
                       </span>
                     </div>
                   </div>
                   
-                  {/* Links Section */}
-                  <div className="flex items-center justify-between pt-3 border-t border-gray-700/30">
-                    <div className="flex space-x-6">
+                  {/* Links Section - Mobile optimized */}
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-3 border-t border-gray-700/30 space-y-2 sm:space-y-0">
+                    <div className="flex space-x-4 sm:space-x-6">
                       <a 
                         href={project.liveUrl} 
                         target="_blank" 
                         rel="noopener noreferrer" 
-                        className="flex items-center space-x-2 text-gray-400 hover:text-green-400 transition-all duration-200 hover:scale-105 font-mono text-base"
+                        className="flex items-center space-x-1 sm:space-x-2 text-gray-400 hover:text-green-400 transition-all duration-200 hover:scale-105 font-mono text-sm sm:text-base"
                       >
                         <ExternalLinkIcon />
                         <span>live</span>
@@ -232,7 +232,7 @@ const Projects = () => {
                         href={project.githubUrl} 
                         target="_blank" 
                         rel="noopener noreferrer" 
-                        className="flex items-center space-x-2 text-gray-400 hover:text-green-400 transition-all duration-200 hover:scale-105 font-mono text-base"
+                        className="flex items-center space-x-1 sm:space-x-2 text-gray-400 hover:text-green-400 transition-all duration-200 hover:scale-105 font-mono text-sm sm:text-base"
                       >
                         <GitHubIcon />
                         <span>code</span>
@@ -241,7 +241,7 @@ const Projects = () => {
                     
                     {/* Status indicator */}
                     <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full animate-pulse"></div>
                       <span className="text-green-400 text-xs font-mono">active</span>
                     </div>
                   </div>
@@ -249,9 +249,9 @@ const Projects = () => {
               </div>
 
               {/* Glow effect on hover */}
-              <div className={`absolute inset-0 rounded-xl transition-all duration-300 pointer-events-none ${
+              <div className={`absolute inset-0 rounded-lg sm:rounded-xl transition-all duration-300 pointer-events-none ${
                 hoveredIndex === globalIndex 
-                  ? 'shadow-2xl shadow-green-500/20 ring-1 ring-green-500/20' 
+                  ? 'shadow-xl sm:shadow-2xl shadow-green-500/20 ring-1 ring-green-500/20' 
                   : ''
               }`}></div>
             </div>
@@ -259,12 +259,12 @@ const Projects = () => {
         })}
       </div>
 
-      {/* Navigation Controls */}
-      <div className="flex items-center justify-between mt-8">
+      {/* Navigation Controls - Mobile responsive */}
+      <div className="flex flex-col sm:flex-row items-center justify-between mt-4 sm:mt-8 space-y-4 sm:space-y-0">
         <button
           onClick={prevPage}
           disabled={currentPage === 0}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-lg border font-mono text-sm transition-all duration-300 ${
+          className={`flex items-center space-x-2 px-3 py-2 sm:px-4 rounded-lg border font-mono text-xs sm:text-sm transition-all duration-300 w-full sm:w-auto justify-center sm:justify-start ${
             currentPage === 0
               ? 'border-gray-700/50 text-gray-600 cursor-not-allowed'
               : 'border-green-500/30 text-green-400 hover:border-green-400 hover:bg-green-500/10 hover:scale-105'
@@ -274,13 +274,15 @@ const Projects = () => {
           <span>prev</span>
         </button>
 
-        {/* Terminal-style page info */}
-        <div className="px-6 py-3 bg-gray-900/30 backdrop-blur-sm border border-green-500/20 rounded-lg">
-          <div className="flex items-center space-x-4 text-sm font-mono">
-            <span className="text-green-400">~/projects</span>
-            <span className="text-gray-500">$</span>
-            <span className="text-gray-400">morscode.site</span>
-            <div className="flex-1"></div>
+        {/* Terminal-style page info - Mobile responsive */}
+        <div className="px-3 py-2 sm:px-6 sm:py-3 bg-gray-900/30 backdrop-blur-sm border border-green-500/20 rounded-lg w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row items-center space-y-1 sm:space-y-0 sm:space-x-4 text-xs sm:text-sm font-mono">
+            <div className="flex items-center space-x-2">
+              <span className="text-green-400">~/projects</span>
+              <span className="text-gray-500">$</span>
+              <span className="text-gray-400 hidden sm:inline">morscode.site</span>
+            </div>
+            <div className="flex-1 hidden sm:block"></div>
             <span className="text-green-400/60">
               {startIndex + 1}-{Math.min(startIndex + projectsPerPage, projectsData.length)} of {projectsData.length}
             </span>
@@ -290,7 +292,7 @@ const Projects = () => {
         <button
           onClick={nextPage}
           disabled={currentPage === totalPages - 1}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-lg border font-mono text-sm transition-all duration-300 ${
+          className={`flex items-center space-x-2 px-3 py-2 sm:px-4 rounded-lg border font-mono text-xs sm:text-sm transition-all duration-300 w-full sm:w-auto justify-center sm:justify-start ${
             currentPage === totalPages - 1
               ? 'border-gray-700/50 text-gray-600 cursor-not-allowed'
               : 'border-green-500/30 text-green-400 hover:border-green-400 hover:bg-green-500/10 hover:scale-105'
