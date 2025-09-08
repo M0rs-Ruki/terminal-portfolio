@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="app-shell">
       <div className="main-content-area">
-        <div className="identity-pane">
+        <div className="identity-pane border-2 border-green-400 ">
           <IdentityComp/>
         </div>
         <div className="terminal-pane">
