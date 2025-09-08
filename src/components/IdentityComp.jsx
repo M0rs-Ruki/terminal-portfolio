@@ -1,251 +1,153 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState } from 'react';
+import '/public/css/IdentityComp.css';
 
-// IdentityComp.jsx
-// Default export React component. Uses Tailwind CSS for styling.
-// Features:
-// - Draggable inside its parent container (the portfolio section). Bounded movement.
-// - Smooth, physics-like dragging using requestAnimationFrame.
-// - Persists last position to localStorage so the card stays where user left it.
-// - Grayscale profile image, monogram/logo, name & role, terminal-like dark styling.
-
-export default function IdentityComp({
-  id = "identity-card",
-  name = "Mors Ruki",
-  role = "Senior Software Engineer",
-  profileSrc = null, // if not provided uses generated mono avatar
-  size = 320, // px (approx card width)
-}) {
-  const cardRef = useRef(null);
-  const containerRef = useRef(null);
-
-  // position in pixels relative to container's top-left
-  const [pos, setPos] = useState({ x: 20, y: 20 });
-  const draggingRef = useRef(false);
-  const pointerOffset = useRef({ x: 0, y: 0 });
-  const rafRef = useRef(null);
-  const velocity = useRef({ vx: 0, vy: 0 });
-
-  // load saved position if exists
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(`identity_pos_${id}`);
-      if (raw) {
-        const saved = JSON.parse(raw);
-        if (saved && typeof saved.x === "number") setPos(saved);
-      }
-    } catch (e) {
-      // ignore
-    }
-  }, [id]);
-
-  useEffect(() => {
-    const onResize = () => clampPosition(pos, true);
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pos]);
-
-  function savePos(p) {
-    try {
-      localStorage.setItem(`identity_pos_${id}`, JSON.stringify(p));
-    } catch (e) {}
-  }
-
-  function clampPosition(p, apply = false) {
-    const container = containerRef.current || cardRef.current?.parentElement;
-    const card = cardRef.current;
-    if (!container || !card) return p;
-    const cRect = container.getBoundingClientRect();
-    const cardRect = card.getBoundingClientRect();
-
-    const maxX = Math.max(0, cRect.width - cardRect.width - 8);
-    const maxY = Math.max(0, cRect.height - cardRect.height - 8);
-
-    const nx = Math.min(Math.max(0, p.x), maxX);
-    const ny = Math.min(Math.max(0, p.y), maxY);
-    const res = { x: nx, y: ny };
-    if (apply) {
-      setPos(res);
-      savePos(res);
-    }
-    return res;
-  }
-
-  function startDrag(e) {
-    const pointer = getPointer(e);
-    const card = cardRef.current;
-    const container = containerRef.current || card.parentElement;
-    if (!card || !container) return;
-
-    const cRect = container.getBoundingClientRect();
-    const cardRect = card.getBoundingClientRect();
-
-    draggingRef.current = true;
-    // compute offset of pointer inside the card
-    pointerOffset.current = {
-      x: pointer.clientX - cardRect.left,
-      y: pointer.clientY - cardRect.top,
-    };
-
-    // stop any existing inertia
-    cancelAnimationFrame(rafRef.current);
-    velocity.current = { vx: 0, vy: 0 };
-
-    // add listeners
-    window.addEventListener("pointermove", onMove);
-    window.addEventListener("pointerup", endDrag);
-    window.addEventListener("pointercancel", endDrag);
-
-    // visual feedback
-    card.style.transition = "none";
-    card.style.willChange = "transform";
-  }
-
-  function onMove(e) {
-    if (!draggingRef.current) return;
-    const pointer = getPointer(e);
-    const container = containerRef.current || cardRef.current.parentElement;
-    const cRect = container.getBoundingClientRect();
-    const newX = pointer.clientX - cRect.left - pointerOffset.current.x;
-    const newY = pointer.clientY - cRect.top - pointerOffset.current.y;
-
-    // compute velocity approx
-    velocity.current = {
-      vx: (newX - pos.x) * 0.6,
-      vy: (newY - pos.y) * 0.6,
-    };
-
-    const clamped = clampPosition({ x: newX, y: newY }, false);
-    // set directly without heavy reflows by using transform
-    setPos(clamped);
-  }
-
-  function endDrag() {
-    if (!draggingRef.current) return;
-    draggingRef.current = false;
-    const card = cardRef.current;
-    card.style.transition = "transform 220ms cubic-bezier(.2,.9,.2,1)";
-
-    // release and save final position
-    const final = clampPosition(pos, true);
-    // apply a tiny inertia animation
-    const friction = 0.9;
-    let { vx, vy } = velocity.current;
-    let cur = { ...final };
-
-    function inertia() {
-      vx *= friction;
-      vy *= friction;
-      cur.x += vx * 0.02;
-      cur.y += vy * 0.02;
-      cur = clampPosition(cur, false);
-      setPos(cur);
-      if (Math.abs(vx) > 0.5 || Math.abs(vy) > 0.5) {
-        rafRef.current = requestAnimationFrame(inertia);
-      } else {
-        setPos(cur);
-        savePos(cur);
-      }
-    }
-    rafRef.current = requestAnimationFrame(inertia);
-
-    // remove listeners
-    window.removeEventListener("pointermove", onMove);
-    window.removeEventListener("pointerup", endDrag);
-    window.removeEventListener("pointercancel", endDrag);
-  }
-
-  function getPointer(e) {
-    return e.changedTouches ? e.changedTouches[0] : e;
-  }
-
-  // keyboard small nudges for accessibility
-  function onKeyDown(e) {
-    if (e.key === "ArrowUp") moveBy(0, -8, true);
-    if (e.key === "ArrowDown") moveBy(0, 8, true);
-    if (e.key === "ArrowLeft") moveBy(-8, 0, true);
-    if (e.key === "ArrowRight") moveBy(8, 0, true);
-  }
-
-  function moveBy(dx, dy, save = false) {
-    const next = clampPosition({ x: pos.x + dx, y: pos.y + dy }, false);
-    setPos(next);
-    if (save) savePos(next);
-  }
-
-  // quick generated monochrome avatar fallback
-  const fallbackAvatar = (
-    <svg width="560" height="560" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-      <rect width="24" height="24" rx="3" fill="currentColor" />
-      <path d="M12 12c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM5 20.25c0-2.485 3.134-4.5 7-4.5s7 2.015 7 4.5v.75H5v-.75z" fill="rgba(255,255,255,0.9)" />
-    </svg>
-  );
+const IdentityComp = ({
+  name = "Anup Pradhan (Mors)",
+  title = "Full Stack Developer",
+  company = "Non",
+  photo = "/public/images/your-photo.jpg",
+  id = "EMP001"
+}) => {
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div
-      ref={containerRef}
-      className="w-full h-full relative overflow-hidden"
-      aria-label="Portfolio identity container"
+      className="
+        identity-container relative flex flex-col items-center py-8
+        [perspective:1000px] text-emerald-300
+      "
     >
+      {/* Lanyard String */}
       <div
-        ref={cardRef}
-        role="button"
-        tabIndex={0}
-        onPointerDown={startDrag}
-        onKeyDown={onKeyDown}
-        className={`select-none absolute shadow-2xl rounded-2xl p-4 flex flex-col items-center text-left cursor-grab`} 
-        style={{
-          width: size,
-          transform: `translate3d(${pos.x}px, ${pos.y}px, 0)`,
-          background: "linear-gradient(180deg, rgba(18,18,18,0.96), rgba(12,12,12,0.9))",
-          boxShadow: "0 8px 30px rgba(0,0,0,0.6), 0 2px 6px rgba(255,215,0,0.03) inset",
-          border: "1px solid rgba(255,255,255,0.03)",
-          backdropFilter: "blur(6px)",
-          WebkitBackdropFilter: "blur(6px)",
-        }}
+        className="
+          lanyard-string mb-2
+          w-px h-20 rounded-sm
+          bg-gradient-to-b from-zinc-700 via-zinc-500 to-zinc-700
+          relative
+        "
+      />
+      <div
+        className="
+          lanyard-clip mb-2 relative
+          w-5 h-4 rounded
+          border border-zinc-700
+          bg-gradient-to-br from-zinc-700 to-zinc-900
+        "
+      />
+
+      {/* ID Card */}
+      <div
+        className={`
+          identity-card ${isHovered ? 'hovered' : ''}
+          relative isolate overflow-hidden
+          w-60 h-[360px] sm:w-72 sm:h-[420px]
+          rounded-xl border border-emerald-700/40
+          bg-zinc-950/80 backdrop-blur
+          ring-1 ring-emerald-600/20
+          shadow-[0_0_0_1px_rgba(16,185,129,0.25),0_0_40px_rgba(16,185,129,0.08)]
+          [transform-style:preserve-3d]
+          transition-[box-shadow,transform] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]
+        `}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        aria-label="Identity card"
       >
-        {/* top monogram/logo */}
-        <div className="w-full flex items-center justify-center mb-2">
-          <div className="w-12 h-12 rounded-full flex items-center justify-center text-sm font-semibold bg-gradient-to-br from-gray-800 to-gray-700 text-white" aria-hidden>
-            {/* simple monogram */}
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="12" r="10" fill="rgba(255,255,255,0.03)" />
-              <text x="12" y="16" textAnchor="middle" fontSize="10" fontWeight="700" fill="white">{(name || "").slice(0,1).toUpperCase()}</text>
-            </svg>
+        {/* Subtle grid/glow backdrop */}
+        <div
+          aria-hidden
+          className="
+            pointer-events-none absolute inset-0 opacity-10 mix-blend-screen
+            bg-[radial-gradient(1000px_300px_at_20%_0%,rgba(16,185,129,.15),transparent),radial-gradient(1000px_300px_at_80%_100%,rgba(16,185,129,.1),transparent)]
+          "
+        />
+
+        {/* CRT scanlines overlay */}
+        <div aria-hidden className="crt-scanlines absolute inset-0 pointer-events-none" />
+
+        {/* Card Header */}
+        <div className="card-header flex items-center px-5 pt-5 pb-4 border-b border-emerald-700/30">
+          <div className="company-logo mr-3">
+            <span className="logo-icon font-mono text-lg font-bold text-emerald-400">&lt;/&gt;</span>
+          </div>
+          <div className="company-name font-mono text-xs sm:text-sm text-zinc-200 font-semibold tracking-[0.2em] uppercase">
+            {company}
           </div>
         </div>
 
-        {/* profile photo */}
-        <div className="w-28 h-28 rounded-full overflow-hidden border border-white/5 mb-3 shadow-inner">
-          {profileSrc ? (
+        {/* Photo Section */}
+        <div className="photo-section px-5 pt-6 pb-4 flex justify-center">
+          <div
+            className="
+              photo-frame relative w-[120px] h-[150px] rounded-md overflow-hidden
+              border border-emerald-700/60
+              ring-1 ring-emerald-500/30
+              shadow-[0_4px_12px_rgba(0,0,0,0.5)]
+            "
+          >
             <img
-              src={profileSrc}
-              alt={`${name} avatar`}
-              className="object-cover w-full h-full grayscale" 
-              style={{ filter: "grayscale(100%) contrast(0.85)" }}
+              src={photo}
+              alt="Profile"
+              className="
+                profile-photo w-full h-full object-cover
+                grayscale-[.2] contrast-110
+                transition-all duration-300
+              "
             />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-b from-gray-900 to-gray-800">
-              {fallbackAvatar}
-            </div>
-          )}
+            <div
+              className="
+                photo-overlay absolute inset-0
+                bg-gradient-to-br from-transparent via-emerald-500/10 to-transparent
+                opacity-0 transition-opacity duration-300
+              "
+            />
+          </div>
         </div>
 
-        {/* name and role */}
-        <div className="w-full text-center">
-          <div className="text-white font-semibold text-lg leading-tight">{name}</div>
-          <div className="text-gray-400 text-sm mt-1">{role}</div>
+        {/* Info Section */}
+        <div className="info-section px-5 text-center">
+          <h3 className="employee-name font-mono text-lg font-extrabold text-zinc-100 tracking-wide">
+            {name}
+          </h3>
+          <p className="employee-title font-mono text-xs text-emerald-400 uppercase tracking-[0.25em]">
+            {title}
+          </p>
+          <div className="employee-id font-mono text-[10px] text-zinc-500 tracking-[0.3em] uppercase mt-3">
+            ID: {id}
+          </div>
         </div>
 
-        {/* subtle footer - terminal style */}
-        <div className="mt-3 w-full px-2 flex items-center justify-between text-xs text-gray-500">
-          <div className="truncate">ID: <span className="text-gray-400">{id}</span></div>
-          <div className="text-gray-400">● active</div>
+        {/* Card Footer */}
+        <div className="card-footer absolute bottom-5 left-5 right-5 flex justify-center">
+          <div className="access-level flex items-center font-mono text-[10px] text-emerald-400 font-semibold tracking-[0.2em] uppercase">
+            <span
+              className="
+                status-indicator inline-block w-2 h-2 rounded-full bg-emerald-500
+                shadow-[0_0_10px_rgba(16,185,129,0.6)]
+                animate-pulse mr-2
+              "
+            />
+            <span>AUTHORIZED</span>
+          </div>
         </div>
 
-        {/* small handle hint */}
-        <div className="mt-3 text-[11px] text-gray-500 opacity-80">Drag to reposition</div>
+        {/* Holographic Effect */}
+        <div
+          aria-hidden
+          className="
+            holographic-overlay pointer-events-none
+            absolute inset-0 -translate-x-full
+            bg-[linear-gradient(90deg,transparent,rgba(16,185,129,0.12),transparent)]
+            transition-transform duration-700
+          "
+        />
+      </div>
+
+      {/* Interactive Label */}
+      <div className="interaction-label font-mono text-[11px] text-emerald-400/80 mt-5 tracking-[0.2em] uppercase">
+        [Interactive 3D Card]
       </div>
     </div>
   );
-}
+};
+
+export default IdentityComp;
