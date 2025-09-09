@@ -8,7 +8,7 @@
 
 ## ✨ Live Demo
 
-🔗 **[View Live Portfolio](https://your-portfolio-url.com)** *(Replace with your deployed URL)*
+🔗 **[View Live Portfolio](https://terminal-portfolio-bice-sigma.vercel.app/)** *(Replace with your deployed URL)*
 
 ---
 
