@@ -25,12 +25,14 @@ const Help = () => {
 
   const helpItems = [
     { type: 'title', text: 'Available commands:' },
+    { type: 'command', command: 'help', description: 'Display this help message.' },
     { type: 'command', command: 'welcome', description: 'Display the welcome message.' },
     { type: 'command', command: 'about', description: 'Learn more about me.' },
     { type: 'command', command: 'projects', description: 'View my recent projects.' },
     { type: 'command', command: 'skills', description: 'See my technical skills.' },
     { type: 'command', command: 'contact', description: 'Get my contact information.' },
     { type: 'command', command: 'clear', description: 'Clear the terminal screen.' },
+    { type: 'command', command: 'refresh', description: 'Reload the page.' },
   ];
 
   useEffect(() => {
@@ -92,8 +94,8 @@ export default function Terminal({ onFirstCommand }) {
   const terminalRef = useRef(null);
   const inputRef = useRef(null);
 
-  const user = "gatere";
-  const host = "portfolio";
+  const user = "mors";
+  const host = "ruki";
 
   const processCommand = (cmd, isAuto = false) => {
     const newHist = [...history, { type: 'prompt', command: cmd }];

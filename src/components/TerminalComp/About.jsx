@@ -136,6 +136,55 @@ const About = () => {
             </div>
           </section>
 
+          {/* Education Section - Mobile optimized */}
+          <section className="border border-green-800/30 bg-gradient-to-br from-green-900/10 to-black/50 backdrop-blur-sm rounded-xl p-4 sm:p-6 lg:p-8 shadow-2xl shadow-green-900/20 hover:shadow-green-900/40 transition-all duration-500">
+            <div className="flex items-center mb-4 sm:mb-6">
+              <span className="text-green-400 font-mono mr-2 sm:mr-4"></span>
+              <h2 className="text-lg sm:text-2xl text-green-400 font-bold font-mono tracking-wider">
+                EDUCATION.log
+              </h2>
+              <div className="ml-auto">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              </div>
+            </div>
+            
+            <div className="ml-3 sm:ml-6 border-l-2 border-green-800/30 pl-3 sm:pl-6 space-y-6">
+              
+              {/* Amity University */}
+              <div className="border-b border-green-800/20 pb-4">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                  <h3 className="text-green-400 font-semibold text-base sm:text-lg font-mono">Amity University</h3>
+                  <span className="text-gray-400 text-sm font-mono">2024 — 2027</span>
+                </div>
+                <p className="text-gray-300 text-sm sm:text-base">Doing my Bachelors of Computer Application (BCA).</p>
+                <div className="mt-2">
+                  <span className="px-2 py-1 bg-green-900/30 border border-green-800/50 rounded-full text-green-400 text-xs font-mono">
+                    CGPA: 8.96
+                  </span>
+                </div>
+              </div>
+
+              {/* Autonomous College Khariar */}
+              <div className="border-b border-green-800/20 pb-4">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                  <h3 className="text-green-400 font-semibold text-base sm:text-lg font-mono">Autonomous College Khariar</h3>
+                  <span className="text-gray-400 text-sm font-mono">2022 — 2024</span>
+                </div>
+                <p className="text-gray-300 text-sm sm:text-base">I did my 11th and 12th in I.T.</p>
+              </div>
+
+              {/* High School */}
+              <div>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                  <h3 className="text-green-400 font-semibold text-base sm:text-lg font-mono">High School</h3>
+                  <span className="text-gray-400 text-sm font-mono">2009 — 2022</span>
+                </div>
+                <p className="text-gray-300 text-sm sm:text-base">I did my schooling from our village school.</p>
+              </div>
+
+            </div>
+          </section>
+
           {/* Skills Section - Mobile responsive grid */}
           <section>
             <div className="flex items-center mb-6 sm:mb-8">
