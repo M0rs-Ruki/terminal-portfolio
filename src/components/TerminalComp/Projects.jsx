@@ -10,14 +10,16 @@ const projectsData = [
     githubUrl: "https://github.com/M0rs-Ruki/AI-Personal-Finance-Tracker",
     tech: ["Node.js","Express", "MongoDB", "EJS", "Tailwind", "JavaScript", "Cohere AI"]
   },
+
   {
-    name: "Network Marketing Full-stack",
-    description: "Network Marketing Platform is a full-stack web application for managing a multi-level marketing (MLM) system. It allows users to register, refer others through unique affiliate links, track team members, view transaction and purchase histories, and monitor course progress.",
-    imageUrl: "./images/network-marketing-project.png",
-    liveUrl: "#",
-    githubUrl: "https://github.com/M0rs-Ruki/Network-Marketing",
-    tech: ["MongoDB", "Express", "Node.js", "HTML", "CSS", "JavaScript", "Tailwind"]
+    name: "Interactive Terminal Portfolio Web Application",
+    description: "This project is an interactive, command-line themed personal portfolio built with React and styled with Tailwind CSS. It departs from traditional portfolio layouts by simulating a classic developer terminal, allowing users to navigate through sections like 'About,' 'Projects,' 'Skills,' and 'Contact' by typing commands.",
+    imageUrl: "./images/terminal-portfolio-project.png",
+    liveUrl: "https://terminal-portfolio-bice-sigma.vercel.app/",
+    githubUrl: "https://github.com/M0rs-Ruki/terminal-portfolio",
+    tech: ["React", "Tailwind CSS", "JavaScript", "HTML", "CSS"]
   },
+
   {
     name: "Ai Fiesta clone Fun projects",
     description: "AI Madness is a premium web application that lets users submit a single prompt and instantly compare responses from multiple AI models (ChatGPT, Claude, Gemini, Perplexity, DeepSeek) on one dashboard. Built with Node.js, Express, MongoDB, and Cohere API, featuring glassmorphism design, neon effects, and toggle-enabled AI panels for seamless multi-model testing.",
@@ -26,6 +28,16 @@ const projectsData = [
     githubUrl: "https://github.com/M0rs-Ruki/AI-Madness",
     tech: ["Node.js", "MongoDB", "Express", "HTML", "CSS", "JavaScript", "Tailwind", "Cohere AI"]
   },
+
+  {
+    name: "Network Marketing Full-stack",
+    description: "Network Marketing Platform is a full-stack web application for managing a multi-level marketing (MLM) system. It allows users to register, refer others through unique affiliate links, track team members, view transaction and purchase histories, and monitor course progress.",
+    imageUrl: "./images/network-marketing-project.png",
+    liveUrl: "#",
+    githubUrl: "https://github.com/M0rs-Ruki/Network-Marketing",
+    tech: ["MongoDB", "Express", "Node.js", "HTML", "CSS", "JavaScript", "Tailwind"]
+  },
+
   {
     name: "YouTube Backend",
     description: "Designed and built a backend system simulating YouTube features using Node.js, Express, and MongoDB. Implemented video upload, metadata storage, user registration & login with JWT auth Structured REST APIs to handle likes, comments, views, and subscriptions Deployed with Postman testing and MongoDB Atlas",

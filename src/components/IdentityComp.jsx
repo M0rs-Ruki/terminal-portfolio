@@ -112,7 +112,7 @@ const IdentityComp = ({
 
       {/* Interactive Label */}
       <div className="interaction-label">
-        {isMobile ? '[Tap to Interact]' : '[Interactive 3D Card]'}
+        {isMobile ? '[負けたらどうせ俺はその程度の男なんだから…]' : '[負けたらどうせ俺はその程度の男なんだから…]'}
       </div>
     </div>
   );
