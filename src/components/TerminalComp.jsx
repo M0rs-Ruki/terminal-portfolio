@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import "/public/css/TerminalComp.css"; // Importing the new CSS file
+import "/public/css/TerminalComp.css"
 
-import About from "./TerminalComp/About"
-import Projects from "./TerminalComp/Projects"
-import Skills from "./TerminalComp/Skills"
-import Contact from "./TerminalComp/Contact"
-
-// --- Helper Components ---
+import About from "./TerminalComp/About";
+import Projects from "./TerminalComp/Projects";
+import Skills from "./TerminalComp/Skills";
+import Contact from "./TerminalComp/Contact";
 
 const Prompt = ({ user, host }) => (
   <span>
@@ -15,13 +13,12 @@ const Prompt = ({ user, host }) => (
     <span className="prompt-directory">~</span>
     <span className="prompt-symbol">$ </span>
   </span>
-)
+);
 
 const OutputLine = ({ children }) => (
   <div className="output-line">{children}</div>
 );
 
-// Animated Help Component
 const Help = () => {
   const [displayedItems, setDisplayedItems] = useState([]);
   const [currentStep, setCurrentStep] = useState(0);
@@ -42,34 +39,24 @@ const Help = () => {
         setDisplayedItems(prev => [...prev, helpItems[currentStep]]);
         setCurrentStep(currentStep + 1);
       }
-    }, 200); // Adjust speed here
-
+    }, 200);
     return () => clearTimeout(timer);
-  }, [currentStep, helpItems.length]);
+  }, [currentStep]);
 
   return (
     <div className="help-command">
-      {displayedItems.map((item, index) => {
-        if (item.type === 'title') {
-          return <p key={index}>{item.text}</p>;
-        } else {
-          return (
-            <ul key={index}>
-              <li>
-                <span>{item.command}</span> - {item.description}
-              </li>
-            </ul>
-          );
-        }
-      })}
-      {currentStep < helpItems.length && (
-        <span className="cursor">|</span>
+      {displayedItems.map((item, i) =>
+        item.type === 'title' ? (
+          <p key={i}>{item.text}</p>
+        ) : (
+          <ul key={i}><li><span>{item.command}</span> – {item.description}</li></ul>
+        )
       )}
+      {currentStep < helpItems.length && <span className="cursor">|</span>}
     </div>
   );
 };
 
-// Animated Welcome Component
 const Welcome = () => {
   const [displayedLines, setDisplayedLines] = useState([]);
   const [currentLine, setCurrentLine] = useState(0);
@@ -86,50 +73,18 @@ const Welcome = () => {
         setDisplayedLines(prev => [...prev, welcomeLines[currentLine]]);
         setCurrentLine(currentLine + 1);
       }
-    }, 400); // Adjust speed here
-
+    }, 400);
     return () => clearTimeout(timer);
-  }, [currentLine, welcomeLines.length]);
+  }, [currentLine]);
 
   return (
     <>
-      {displayedLines.map((line, index) => (
-        <OutputLine key={index}>{line}</OutputLine>
-      ))}
-      {currentLine < welcomeLines.length && (
-        <span className="cursor">|</span>
-      )}
+      {displayedLines.map((line, i) => <OutputLine key={i}>{line}</OutputLine>)}
+      {currentLine < welcomeLines.length && <span className="cursor">|</span>}
     </>
   );
 };
 
-// Character-by-character typing component (alternative approach)
-const TypingText = ({ text, speed = 50, onComplete }) => {
-  const [displayedText, setDisplayedText] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    if (currentIndex < text.length) {
-      const timeout = setTimeout(() => {
-        setDisplayedText(text.slice(0, currentIndex + 1));
-        setCurrentIndex(currentIndex + 1);
-      }, speed);
-
-      return () => clearTimeout(timeout);
-    } else if (onComplete) {
-      onComplete();
-    }
-  }, [currentIndex, text, speed, onComplete]);
-
-  return (
-    <span>
-      {displayedText}
-      {currentIndex < text.length && <span className="cursor">|</span>}
-    </span>
-  );
-};
-
-// The main Terminal Component
 export default function Terminal({ onFirstCommand }) {
   const [history, setHistory] = useState([]);
   const [input, setInput] = useState('');
@@ -140,69 +95,57 @@ export default function Terminal({ onFirstCommand }) {
   const user = "gatere";
   const host = "portfolio";
 
-  const processCommand = (command, isAutomatic = false) => {
-    const newHistory = [...history, { type: 'prompt', command }];
-
-    // Call onFirstCommand if this is the first user command (not the automatic welcome)
-    if (isFirstUserCommand && !isAutomatic && onFirstCommand) {
+  const processCommand = (cmd, isAuto = false) => {
+    const newHist = [...history, { type: 'prompt', command: cmd }];
+    if (isFirstUserCommand && !isAuto && onFirstCommand) {
       onFirstCommand();
       setIsFirstUserCommand(false);
     }
-
-    switch (command.toLowerCase().trim()) {
-      case 'help':
-        newHistory.push({ type: 'output', content: <Help key={Date.now()} /> });
-        break;
-      case 'welcome':
-        newHistory.push({ type: 'output', content: <Welcome key={Date.now()} /> });
-        break;
-      case 'about':
-        newHistory.push({ type: 'output', content: <About /> });
-        break;
-      case 'projects':
-        newHistory.push({ type: 'output', content: <Projects /> });
-        break;
-      case 'skills':
-        newHistory.push({ type: 'output', content: <Skills /> });
-        break;
-      case 'contact':
-        newHistory.push({ type: 'output', content: <Contact /> });
-        break;
-      case 'clear':
-        setHistory([]);
-        return;
-      case 'refresh':
-        window.location.reload();
-        return;
+    switch (cmd.trim().toLowerCase()) {
+      case 'help': newHist.push({ type: 'output', content: <Help key={Date.now()} /> }); break;
+      case 'welcome': newHist.push({ type: 'output', content: <Welcome key={Date.now()} /> }); break;
+      case 'about': newHist.push({ type: 'output', content: <About /> }); break;
+      case 'projects': newHist.push({ type: 'output', content: <Projects /> }); break;
+      case 'skills': newHist.push({ type: 'output', content: <Skills /> }); break;
+      case 'contact': newHist.push({ type: 'output', content: <Contact /> }); break;
+      case 'clear': setHistory([]); return;
+      case 'refresh': window.location.reload(); return;
       default:
-        newHistory.push({ type: 'output', content: `Command not found: ${command}. Type 'help' for a list of commands.` });
+        newHist.push({
+          type: 'output',
+          content: `Command not found: ${cmd}. Type 'help' for a list of commands.`
+        });
         break;
     }
-    setHistory(newHistory);
+    setHistory(newHist);
   };
 
-  const handleFormSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     processCommand(input);
     setInput('');
   };
 
-  const handleNavClick = (command) => {
-    processCommand(command);
-  }
+  const handleNav = cmd => processCommand(cmd);
 
   const focusInput = () => {
     inputRef.current?.focus();
+    // Scroll to bottom when keyboard opens
+    setTimeout(() => {
+      terminalRef.current?.scrollTo({
+        top: terminalRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }, 300);
   };
+
+  useEffect(() => {
+    processCommand('welcome', true);
+  }, []);
 
   useEffect(() => {
     terminalRef.current?.scrollTo(0, terminalRef.current.scrollHeight);
   }, [history]);
-
-  useEffect(() => {
-    // Don't count the automatic welcome as first user command
-    processCommand('welcome', true);
-  }, []);
 
   return (
     <div className="terminal-container" onClick={focusInput}>
@@ -213,20 +156,17 @@ export default function Terminal({ onFirstCommand }) {
           <div className="dot dot-green"></div>
         </div>
         <nav className="terminal-nav">
-          {['welcome', 'help', 'about', 'projects', 'skills', 'contact', 'clear', " refresh"].map(cmd => (
-            <button key={cmd} onClick={() => handleNavClick(cmd)} className="nav-button">
-              {cmd}
-            </button>
+          {['welcome','help','about','projects','skills','contact','clear','refresh'].map(cmd => (
+            <button key={cmd} onClick={() => handleNav(cmd)} className="nav-button">{cmd}</button>
           ))}
         </nav>
       </header>
-
       <main ref={terminalRef} className="terminal-body">
-        {history.map((line, index) => (
-          <div key={index} className="history-line">
+        {history.map((line, i) => (
+          <div key={i} className="history-line">
             {line.type === 'prompt' ? (
               <div>
-                <Prompt user={user} host={host} />
+                <Prompt user={user} host={host}/>
                 <span className="command-text">{line.command}</span>
               </div>
             ) : (
@@ -234,16 +174,15 @@ export default function Terminal({ onFirstCommand }) {
             )}
           </div>
         ))}
-
-        <form onSubmit={handleFormSubmit} className="input-form">
-          <Prompt user={user} host={host} />
+        <form onSubmit={handleSubmit} className="input-form">
+          <Prompt user={user} host={host}/>
           <input
             ref={inputRef}
             type="text"
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={e => setInput(e.target.value)}
             className="terminal-input"
-            autoFocus
+            onFocus={focusInput}
           />
         </form>
       </main>
