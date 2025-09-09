@@ -39,9 +39,78 @@
 }
 
 /* Buttons within the navigation bar */
+/* Buttons within the navigation bar */
 .nav-button {
-  @apply px-3 py-1 hover:bg-green-900 rounded transition-colors duration-200;
+  @apply px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300;
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  color: #10b981;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  margin-right: 8px;
 }
+
+.nav-button:hover {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid #22c55e;
+  color: #34d399;
+  box-shadow: 
+    0 0 12px rgba(34, 197, 94, 0.5),
+    0 2px 8px rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
+}
+
+.nav-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile Responsive - Tablet */
+@media (max-width: 768px) {
+  .terminal-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 1rem;
+  }
+  
+  .nav-button {
+    margin-right: 0;
+    margin-bottom: 6px;
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+/* Mobile Responsive - Small Phones */
+@media (max-width: 480px) {
+  .terminal-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+    padding: 0 0.5rem;
+  }
+  
+  .nav-button {
+    flex: 1 1 calc(50% - 8px);
+    margin-right: 0;
+    margin-bottom: 6px;
+    text-align: center;
+    font-size: 0.7rem;
+    padding: 0.4rem 0.6rem;
+    min-width: 70px;
+  }
+}
+
+/* Very Small Screens */
+@media (max-width: 360px) {
+  .nav-button {
+    flex: 1 1 calc(50% - 6px);
+    font-size: 0.65rem;
+    padding: 0.3rem 0.5rem;
+    min-width: 60px;
+  }
+}
+
 
 /* Main content area of the terminal */
 .terminal-body {

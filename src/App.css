@@ -289,3 +289,17 @@ body, html {
     -moz-osx-font-smoothing: grayscale;
   }
 }
+
+/* Hide identity pane on mobile after first command */
+@media screen and (max-width: 768px) {
+  .identity-pane.hide-on-mobile {
+    display: none;
+  }
+  
+  /* Adjust terminal pane to full height when identity is hidden */
+  .identity-pane.hide-on-mobile + .terminal-pane {
+    height: 100vh;
+    max-height: 100vh;
+    min-height: 100vh;
+  }
+}

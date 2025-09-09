@@ -130,17 +130,24 @@ const TypingText = ({ text, speed = 50, onComplete }) => {
 };
 
 // The main Terminal Component
-export default function Terminal() {
+export default function Terminal({ onFirstCommand }) {
   const [history, setHistory] = useState([]);
   const [input, setInput] = useState('');
+  const [isFirstUserCommand, setIsFirstUserCommand] = useState(true);
   const terminalRef = useRef(null);
   const inputRef = useRef(null);
 
   const user = "gatere";
   const host = "portfolio";
 
-  const processCommand = (command) => {
+  const processCommand = (command, isAutomatic = false) => {
     const newHistory = [...history, { type: 'prompt', command }];
+
+    // Call onFirstCommand if this is the first user command (not the automatic welcome)
+    if (isFirstUserCommand && !isAutomatic && onFirstCommand) {
+      onFirstCommand();
+      setIsFirstUserCommand(false);
+    }
 
     switch (command.toLowerCase().trim()) {
       case 'help':
@@ -163,6 +170,9 @@ export default function Terminal() {
         break;
       case 'clear':
         setHistory([]);
+        return;
+      case 'refresh':
+        window.location.reload();
         return;
       default:
         newHistory.push({ type: 'output', content: `Command not found: ${command}. Type 'help' for a list of commands.` });
@@ -190,7 +200,8 @@ export default function Terminal() {
   }, [history]);
 
   useEffect(() => {
-    processCommand('welcome');
+    // Don't count the automatic welcome as first user command
+    processCommand('welcome', true);
   }, []);
 
   return (
@@ -202,7 +213,7 @@ export default function Terminal() {
           <div className="dot dot-green"></div>
         </div>
         <nav className="terminal-nav">
-          {['welcome', 'help', 'about', 'projects', 'skills', 'contact', 'clear'].map(cmd => (
+          {['welcome', 'help', 'about', 'projects', 'skills', 'contact', 'clear', " refresh"].map(cmd => (
             <button key={cmd} onClick={() => handleNavClick(cmd)} className="nav-button">
               {cmd}
             </button>
