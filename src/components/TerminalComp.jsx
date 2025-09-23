@@ -131,8 +131,13 @@ export default function Terminal({ onFirstCommand }) {
   const handleNav = cmd => processCommand(cmd);
 
   const focusInput = () => {
-    inputRef.current?.focus();
-    // Scroll to bottom when keyboard opens
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    if (inputRef.current && !isTouchDevice) {
+        inputRef.current.focus();
+    }
+    
+
     setTimeout(() => {
       terminalRef.current?.scrollTo({
         top: terminalRef.current.scrollHeight,
@@ -142,6 +147,10 @@ export default function Terminal({ onFirstCommand }) {
   };
 
   useEffect(() => {
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (!isTouchDevice) {
+      inputRef.current?.focus();
+    }
     processCommand('welcome', true);
   }, []);
 

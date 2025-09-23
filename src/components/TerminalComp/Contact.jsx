@@ -225,7 +225,7 @@ const Contact = () => {
               {[
                 { icon: YoutubeIcon, name: "YouTube", href: "https://www.youtube.com/@morscode7", color: "red" },
                 { icon: TwitterIcon, name: "Twitter / X", href: "https://x.com/AnupPradhan0", color: "blue" },
-                { icon: InstagramIcon, name: "Instagram", href: "https://www.instagram.com/mors_code__", color: "pink" },
+                { icon: InstagramIcon, name: "Instagram", href: "https://www.instagram.com/mors.365/", color: "pink" },
                 { icon: LinkedinIcon, name: "LinkedIn", href: "https://www.linkedin.com/in/anup-pradhan77", color: "blue" },
                 { icon: GithubIcon, name: "GitHub", href: "https://github.com/M0rs-Ruki", color: "purple" },
                 { icon: LeetcodeIcon, name: "LeetCode", href: "https://leetcode.com/u/Anuppradhan/", color: "yellow" }
