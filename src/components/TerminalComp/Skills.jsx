@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 // --- Data for your skills, organized by category ---
 const skillsData = {
-  languages: ["JavaScript (ES6+)", "Python","C++", "HTML5", "CSS3",],
+  languages: ["JavaScript (ES6+)", "TypeScript", "Python","C++", "HTML5", "CSS3",],
   frontend: ["React", "Tailwind CSS", "EJS", "Vite",],
   backend: ["Node.js", "Express.js", "REST APIs",],
   databases: ["MongoDB", "Mongoose", "MongoDB Atlas",],
