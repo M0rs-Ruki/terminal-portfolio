@@ -66,7 +66,7 @@ const Welcome = () => {
   const welcomeLines = [
     "Hi, I'm Anup Pradhan (Mors), a Full-Stack Developer.",
     "Welcome to my interactive portfolio terminal!",
-    "Type 'help' to see available commands."
+    "Type 'help' or 'ls' to see available commands."
   ];
 
   useEffect(() => {
@@ -104,18 +104,18 @@ export default function Terminal({ onFirstCommand }) {
       setIsFirstUserCommand(false);
     }
     switch (cmd.trim().toLowerCase()) {
-      case 'help': newHist.push({ type: 'output', content: <Help key={Date.now()} /> }); break;
-      case 'welcome': newHist.push({ type: 'output', content: <Welcome key={Date.now()} /> }); break;
-      case 'about': newHist.push({ type: 'output', content: <About /> }); break;
-      case 'projects': newHist.push({ type: 'output', content: <Projects /> }); break;
-      case 'skills': newHist.push({ type: 'output', content: <Skills /> }); break;
-      case 'contact': newHist.push({ type: 'output', content: <Contact /> }); break;
-      case 'clear': setHistory([]); return;
-      case 'refresh': window.location.reload(); return;
+      case 'help': case 'ls': newHist.push({ type: 'output', content: <Help key={Date.now()} /> }); break;
+      case 'welcome': case 'cd welcome': newHist.push({ type: 'output', content: <Welcome key={Date.now()} /> }); break;
+      case 'about': case 'cd about': newHist.push({ type: 'output', content: <About /> }); break;
+      case 'projects': case 'cd projects': newHist.push({ type: 'output', content: <Projects /> }); break;
+      case 'skills': case 'cd skills': newHist.push({ type: 'output', content: <Skills /> }); break;
+      case 'contact': case 'cd contact': newHist.push({ type: 'output', content: <Contact /> }); break;
+      case 'clear': case 'cd clear': setHistory([]); return;
+      case 'refresh': case 'cd refresh': window.location.reload(); return;
       default:
         newHist.push({
           type: 'output',
-          content: `Command not found: ${cmd}. Type 'help' for a list of commands.`
+          content: `Command not found: ${cmd}. Type 'help' or 'ls' for a list of commands.`
         });
         break;
     }

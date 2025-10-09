@@ -123,11 +123,11 @@ const About = () => {
             
             <div className="ml-3 sm:ml-6 border-l-2 border-green-800/30 pl-3 sm:pl-6">
               <p className="text-gray-300 leading-relaxed text-sm sm:text-lg font-light">
-                I'm a dedicated <span className="text-green-400 font-semibold">Full-Stack Developer</span> with a strong focus on backend development, driven by a passion for building scalable systems and writing clean, efficient code. I also have a growing interest in <span className="text-green-400 font-semibold">Artificial Intelligence</span> and <span className="text-green-400 font-semibold">Machine Learning</span>, continuously exploring how intelligent systems can enhance real-world applications.
+                I'm a <span className="text-green-400 font-semibold">Full-Stack MERN Developer</span> who thrives on turning complex problems into elegant, scalable software. With a strong command of TypeScript and a deep focus on backend architecture, I build the powerful engines that drive modern web applications. My curiosity is currently leading me to explore the exciting worlds of AI and Machine Learning, as I believe the future of development lies in creating smarter, more intuitive user experiences.
               </p>
               
               <div className="mt-4 sm:mt-6 flex flex-wrap gap-2">
-                {['JavaScript', 'Node.js', 'React', 'MongoDB', 'AI/ML', 'Express'].map((tech) => (
+                {['MongoDB', 'Express', 'React', 'Node.js', 'JavaScript', 'TypeScript'].map((tech) => (
                   <span key={tech} className="px-2 py-1 sm:px-3 bg-green-900/30 border border-green-800/50 rounded-full text-green-400 text-xs sm:text-sm font-mono hover:bg-green-800/30 transition-colors duration-300">
                     {tech}
                   </span>
@@ -205,16 +205,16 @@ const About = () => {
                     <CodeIcon />
                   </div>
                   <h3 className="font-bold text-green-400 text-lg sm:text-xl mb-2 sm:mb-3 font-mono">
-                    Full Stack Developer
+                    Full-Stack WhatsApp Campaigner
                   </h3>
                   <p className="text-gray-400 text-sm sm:text-base leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
-                    Building dynamic, secure, and scalable web applications with expertise in robust backends and efficient frontend-backend integrations.
+                    I am building a scalable, full-stack WhatsApp automation tool using a TypeScript-based MERN stack. The project features a secure Node.js/Express backend with a RESTful API for handling user authentication, contact management, and campaign scheduling. The frontend is a responsive React dashboard where users can control and monitor their marketing campaigns in real-time.
                   </p>
                 </div>
               </div>
 
               {/* Backend Card - Mobile optimized */}
-              <div className="group border border-green-800/40 bg-gradient-to-br from-green-900/20 to-black/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:scale-[1.02] sm:hover:scale-105 hover:shadow-2xl hover:shadow-green-900/30 relative overflow-hidden">
+              {/* <div className="group border border-green-800/40 bg-gradient-to-br from-green-900/20 to-black/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:scale-[1.02] sm:hover:scale-105 hover:shadow-2xl hover:shadow-green-900/30 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-green-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-3 sm:mb-4">
@@ -227,10 +227,10 @@ const About = () => {
                     Mastering backend development with JavaScript, Node.js, Express, APIs, and MongoDB to architect scalable web applications.
                   </p>
                 </div>
-              </div>
+              </div> */}
 
               {/* AI/ML Card - Mobile optimized */}
-              <div className="group border border-green-800/40 bg-gradient-to-br from-green-900/20 to-black/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:scale-[1.02] sm:hover:scale-105 hover:shadow-2xl hover:shadow-green-900/30 relative overflow-hidden">
+              {/* <div className="group border border-green-800/40 bg-gradient-to-br from-green-900/20 to-black/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:scale-[1.02] sm:hover:scale-105 hover:shadow-2xl hover:shadow-green-900/30 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-green-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-3 sm:mb-4">
@@ -243,7 +243,7 @@ const About = () => {
                     Diving deep into AI/ML with focus on data-driven models, pattern recognition, and developing intelligent applications.
                   </p>
                 </div>
-              </div>
+              </div> */}
 
               {/* YouTube Card - Mobile optimized */}
               <div className="group border border-green-800/40 bg-gradient-to-br from-green-900/20 to-black/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:scale-[1.02] sm:hover:scale-105 hover:shadow-2xl hover:shadow-green-900/30 relative overflow-hidden">
@@ -256,7 +256,7 @@ const About = () => {
                     Content Creation
                   </h3>
                   <p className="text-gray-400 text-sm sm:text-base leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
-                    Documenting my tech journey on YouTube—sharing backend, JavaScript, and AI/ML insights while building community connections.
+                    Beyond coding, I am passionate about sharing my experiences. Once a month, I create and upload a video that offers a look into my life as a developer—from the technical challenges of a new project to the personal lessons learned along the way. My goal is to build in public and share my process with the community.
                   </p>
                 </div>
               </div>
