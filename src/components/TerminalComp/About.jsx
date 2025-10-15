@@ -123,7 +123,7 @@ const About = () => {
             
             <div className="ml-3 sm:ml-6 border-l-2 border-green-800/30 pl-3 sm:pl-6">
               <p className="text-gray-300 leading-relaxed text-sm sm:text-lg font-light">
-                I'm a <span className="text-green-400 font-semibold">Full-Stack MERN Developer</span> who thrives on turning complex problems into elegant, scalable software. With a strong command of TypeScript and a deep focus on backend architecture, I build the powerful engines that drive modern web applications. My curiosity is currently leading me to explore the exciting worlds of AI and Machine Learning, as I believe the future of development lies in creating smarter, more intuitive user experiences.
+                I'm a <span className="text-green-400 font-semibold">MERN Stack Developer</span> with a backend focus, building reliable RESTful APIs and full‑stack applications using MongoDB, Express.js, React, Node.js, and TypeScript, with JWT‑based auth and responsive interfaces in React, Tailwind, HTML/CSS, and EJS. Strong in data modeling with Mongoose, media handling via Cloudinary integration (storage/CDN, not a database), and pragmatic tooling across Git/GitHub, Docker, Postman, and API testing for robust delivery.​ Comfortable augmeting products with AI/ML libraries (TensorFlow, NumPy, pandas) and shipping to Vercel/Render, guided by a build‑to‑learn mindset and ongoing BCA studies (CGPA 8.96)..
               </p>
               
               <div className="mt-4 sm:mt-6 flex flex-wrap gap-2">

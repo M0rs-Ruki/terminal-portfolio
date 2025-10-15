@@ -3,6 +3,15 @@ import React, { useState } from "react";
 // --- Data for your 5 projects ---
 const projectsData = [
   {
+    name: "WhatsApp Campaign Management Platform",
+    description: "A full-stack MERN application for managing WhatsApp marketing campaigns with role-based access for admins and resellers. Features include client onboarding, financial transaction tracking with credit/debit records, and an integrated complaint management system. Built with React and TypeScript, featuring hierarchical user tree visualization with collapsible nodes and modal views. Backend powered by Node.js, Express, and MongoDB with Mongoose ODM for handling transactions, user management, and campaign operations. Integrated Cloudinary for image storage with automated cleanup scheduling.",
+    imageUrl: "./images/whatsApp-Campaign.png",
+    liveUrl: "https://www.rukiai.online/",
+    githubUrl: "https://github.com/M0rs-Ruki/WhatsApp-Campaigner",
+    tech: ["React", "Tailwind CSS","TypeScript","Node.js","Express","MongoDB","Mongoose(ODM)","Cloudinary"]
+  },
+
+  {
     name: "AI-powered personal finance tracker",
     description: "RukiAI is an AI-driven personal finance tracker designed to help users log expenses,set budgets, and receive smart, personalized financial advice. Built with Node.js, MongoDB, and EJS, it integrates Cohere's AI API to deliver real-time insights while also featuring a custom local AI model to demonstrate advanced AI capabilities for recruiters. The project showcases both cloud-based AI integration and self-hosted model development in one application.",
     imageUrl: "./images/ruki-ai-project.png",
@@ -11,22 +20,22 @@ const projectsData = [
     tech: ["Node.js","Express", "MongoDB", "EJS", "Tailwind", "JavaScript", "Cohere AI"]
   },
 
-  {
-    name: "Interactive Terminal Portfolio Web Application",
-    description: "This project is an interactive, command-line themed personal portfolio built with React and styled with Tailwind CSS. It departs from traditional portfolio layouts by simulating a classic developer terminal, allowing users to navigate through sections like 'About,' 'Projects,' 'Skills,' and 'Contact' by typing commands.",
-    imageUrl: "./images/terminal-portfolio-project.png",
-    liveUrl: "https://terminal-portfolio-bice-sigma.vercel.app/",
-    githubUrl: "https://github.com/M0rs-Ruki/terminal-portfolio",
-    tech: ["React", "Tailwind CSS", "JavaScript", "HTML", "CSS"]
-  },
+  // {
+  //   name: "Interactive Terminal Portfolio Web Application",
+  //   description: "This project is an interactive, command-line themed personal portfolio built with React and styled with Tailwind CSS. It departs from traditional portfolio layouts by simulating a classic developer terminal, allowing users to navigate through sections like 'About,' 'Projects,' 'Skills,' and 'Contact' by typing commands.",
+  //   imageUrl: "./images/terminal-portfolio-project.png",
+  //   liveUrl: "https://terminal-portfolio-bice-sigma.vercel.app/",
+  //   githubUrl: "https://github.com/M0rs-Ruki/terminal-portfolio",
+  //   tech: ["React", "Tailwind CSS", "JavaScript", "HTML", "CSS"]
+  // },
 
   {
-    name: "Ai Fiesta clone Fun projects",
-    description: "AI Madness is a premium web application that lets users submit a single prompt and instantly compare responses from multiple AI models (ChatGPT, Claude, Gemini, Perplexity, DeepSeek) on one dashboard. Built with Node.js, Express, MongoDB, and Cohere API, featuring glassmorphism design, neon effects, and toggle-enabled AI panels for seamless multi-model testing.",
-    imageUrl: "./images/ai-fiesta-project.png",
-    liveUrl: "https://ai-madness.onrender.com/",
-    githubUrl: "https://github.com/M0rs-Ruki/AI-Madness",
-    tech: ["Node.js", "MongoDB", "Express", "HTML", "CSS", "JavaScript", "Tailwind", "Cohere AI"]
+    name: "Neural Network From Scratch (in Python)",
+    description: "Tech: Python, NumPy,Matplotlib,Tensorflow Implemented a basic neural network from the ground up using only Python and NumPy—no external ML libraries. Designed input, hidden, and output layers; implemented forward propagation, activation functions (Sigmoid/ReLU), and backpropagation manually. Trained on sample data to demonstrate model learning.",
+    imageUrl: "./images/neural-network-project.png",
+    liveUrl: "#",
+    githubUrl: "https://github.com/M0rs-Ruki/digit-recognition-neural-network",
+    tech: ["Python", "NumPy", "Matplotlib", "Tensorflow", "Jupyter Notebook"]
   },
 
   {
@@ -46,14 +55,16 @@ const projectsData = [
     githubUrl: "https://github.com/M0rs-Ruki/YouTube-Clone-Backend",
     tech: ["Node.js", "Express", "MongoDB", "JWT", "Postman", "MongoDB Atlas" ]
   },
+
   {
-    name: "Neural Network From Scratch (in Python)",
-    description: "Tech: Python, NumPy,Matplotlib,Tensorflow Implemented a basic neural network from the ground up using only Python and NumPy—no external ML libraries. Designed input, hidden, and output layers; implemented forward propagation, activation functions (Sigmoid/ReLU), and backpropagation manually. Trained on sample data to demonstrate model learning.",
-    imageUrl: "./images/neural-network-project.png",
-    liveUrl: "#",
-    githubUrl: "https://github.com/M0rs-Ruki/digit-recognition-neural-network",
-    tech: ["Python", "NumPy", "Matplotlib", "Tensorflow", "Jupyter Notebook"]
+    name: "Ai Fiesta clone Fun projects",
+    description: "AI Madness is a premium web application that lets users submit a single prompt and instantly compare responses from multiple AI models (ChatGPT, Claude, Gemini, Perplexity, DeepSeek) on one dashboard. Built with Node.js, Express, MongoDB, and Cohere API, featuring glassmorphism design, neon effects, and toggle-enabled AI panels for seamless multi-model testing.",
+    imageUrl: "./images/ai-fiesta-project.png",
+    liveUrl: "https://ai-madness.onrender.com/",
+    githubUrl: "https://github.com/M0rs-Ruki/AI-Madness",
+    tech: ["Node.js", "MongoDB", "Express", "HTML", "CSS", "JavaScript", "Tailwind", "Cohere AI"]
   },
+
 ];
 
 // --- SVG Icons ---
