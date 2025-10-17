@@ -33,7 +33,7 @@ const projectsData = [
     name: "Neural Network From Scratch (in Python)",
     description: "Tech: Python, NumPy,Matplotlib,Tensorflow Implemented a basic neural network from the ground up using only Python and NumPy—no external ML libraries. Designed input, hidden, and output layers; implemented forward propagation, activation functions (Sigmoid/ReLU), and backpropagation manually. Trained on sample data to demonstrate model learning.",
     imageUrl: "./images/neural-network-project.png",
-    liveUrl: "#",
+    liveUrl: "https://digit-recognizer-fullstack.vercel.app/",
     githubUrl: "https://github.com/M0rs-Ruki/digit-recognition-neural-network",
     tech: ["Python", "NumPy", "Matplotlib", "Tensorflow", "Jupyter Notebook"]
   },
