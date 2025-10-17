@@ -6,7 +6,7 @@ const projectsData = [
     name: "WhatsApp Campaign Management Platform",
     description: "A full-stack MERN application for managing WhatsApp marketing campaigns with role-based access for admins and resellers. Features include client onboarding, financial transaction tracking with credit/debit records, and an integrated complaint management system. Built with React and TypeScript, featuring hierarchical user tree visualization with collapsible nodes and modal views. Backend powered by Node.js, Express, and MongoDB with Mongoose ODM for handling transactions, user management, and campaign operations. Integrated Cloudinary for image storage with automated cleanup scheduling.",
     imageUrl: "./images/whatsApp-Campaign.png",
-    liveUrl: "https://www.rukiai.online/",
+    liveUrl: "https://whats-app-campaigner.vercel.app",
     githubUrl: "https://github.com/M0rs-Ruki/WhatsApp-Campaigner",
     tech: ["React", "Tailwind CSS","TypeScript","Node.js","Express","MongoDB","Mongoose(ODM)","Cloudinary"]
   },
